@@ -1,0 +1,14 @@
+{% extends 'main_students.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1>{{book.book_title}}</h1>
+    <img src="{{ book.book_cover.url }}" alt="book_cover" style="width:100px; height: 100px">
+    {{ book.description }}</br>
+    {{ book.author }}
+
+    <a class="btn btn-primary" href="{% url 'books:Borrow_page' book.id %}" role="button">Borrow</a>
+</div>
+{% endif %}
+{% endblock content%}

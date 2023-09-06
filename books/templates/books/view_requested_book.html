@@ -1,0 +1,18 @@
+{% extends 'main_librarian.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1>{{book.book_title}}</h1>
+    <img src="{{ book.book_cover.url }}" alt="book_cover" style="width:100px; height: 100px">
+    {{book.description}}</br>
+    {{book.author}}
+    <a class="btn btn-primary" href="{% url 'books:Issue_book' book.id %}" role="button">Issue</a>
+
+    {% else %}
+    <h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+    </br>
+    <h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+    {% endif %}
+</div>
+{% endblock content%}

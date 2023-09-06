@@ -1,0 +1,42 @@
+  {% extends 'main_students.html' %}
+  {% block content %}
+  {% if user.is_authenticated %}
+    <section class="container-fluid mt-3">
+        <section class="row justify-content-center">
+            <div class="jumbotron py-1 text-muted">
+                Book: {{ book.book_title }} by {{ book.author }} 
+                <hr/>
+            </div>
+            <div class="col-md-6 mt-2">
+                <div class="card card-body shadow">
+                    <img class="card-img-top" src="{{ book.book_cover.url }}" alt="Card image cap" style="width: 18rem;">
+                    <h5 class="mt-2">Name: {{ book.book_title }}</h5>
+                    <h5 class="mt-2">Author: {{ book.author }}</h5>
+                    <h5 class="mt-2">Description: {{ book.description }}</h5>
+                    <h5 class="mt-2">Edition: {{ book.edition }}</h5>
+                    <h5 class="mt-2">Date Published: {{ book.publication_date }}</h5>
+                    <h5 class="mt-2">Status: Available</h5>
+                </div>
+            </div> 
+            <div class="col-md-6 mt-2">
+                <div class="card card-body h-100 shadow">
+                    <form action="{% url 'books:borrow_book' book.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3 text-danger"> 
+                            <h5>
+                                Please endavour to pick the book ASAP.Book will be made available for borrowing to other users if not picked within 30 minutes
+                            </h5>
+                            <p class="text-success">Thank you for Using the campus library. </p>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Borrow Book</button>
+                      </form>
+                </div>
+            </div>
+        </section>
+    </section>
+    {% else %}
+    <h1>Please Logiin First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+    </br>
+    <h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+    {% endif %}
+{% endblock %}

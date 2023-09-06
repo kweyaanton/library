@@ -1,0 +1,22 @@
+{% extends 'main_librarian.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1 style='color:blue;'>Requested Books</h1>
+    <div>
+        {% for book in books %}
+            {{ book.book }}
+        </br>
+            {{ book.user }}
+        </br>
+        <a class="btn btn-success" href="{% url 'books:view_requested_book' book.id %}" role="button">Issue Book</a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+    </br>
+    <h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+    {% endif %}
+</div>
+{% endblock content %}

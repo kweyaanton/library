@@ -1,0 +1,13 @@
+{% extends 'main_students.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1 style='color:blue;'>My payments</h1>
+    {% else %}
+    <h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+    </br>
+    <h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+    {% endif %}
+</div>
+{% endblock content %}

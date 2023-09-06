@@ -1,0 +1,32 @@
+{% extends 'main.html'%}
+<head>
+    <style>
+        body {background:blue;}
+    </style>
+</head>
+{% block content%}
+{% if form.errors %}
+<p>
+    There was an error in your form... 
+</p>
+{% endif %}
+<div>
+    <div class="shadow p-4 mb-5 bg-body rounded">
+        <h1>Signup</h1>
+    <br/><br/>
+    
+
+        <form action="{% url 'register_user' %}" method="POST">
+        {% csrf_token %} 
+        {{ form.as_p }}
+    <br/>   
+        <button type="submit "class='btn btn-primary'>signup</button>
+        </form>
+   
+
+    </div>
+
+
+</div>
+
+{%  endblock content  %}

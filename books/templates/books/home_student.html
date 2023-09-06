@@ -1,0 +1,80 @@
+{% extends 'main_students.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1 style='color:blue;'>Home page</h1>
+    <div >
+    
+        <form class="d-flex" method="POST" action="{% url 'books:search_books' %}">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Search books" aria-label="Search" name="searched">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form> 
+
+        <h1 class='list' style='color:blue;'>Catalogue</h1>
+       <div class="row">
+            {% for book in books_list %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ book.book_cover.url }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.book_title }}</h5>
+                        <p class="card-text">Author:{{ book.author }} <br/>Edition:{{ book.edition }} <br/>Date Published:{{ book.publication_date }} <br/>Subject:{{ book.subject_area }}</p>
+                        {% if book.description %}
+                            <h5>Description:{{ book.description }}</h5>
+                        {% endif %}
+                        {% if book.status == 'AVAILABLE' %}
+                            <h5 class="alert alert-primary" role="alert">Status:{{ book.status }}</h5>
+                        {% else %}
+                            <h5 class="alert alert-danger" role="alert">Status:{{ book.status }}</h5>
+                        {% endif %}
+                        {% if book.status == 'AVAILABLE' %}        
+                            <a class="btn btn-primary" href="{% url 'books:Borrow_page' book.id %}" role="button">Borrow</a>
+                        {% endif %}
+                    <a class="btn btn-success" href="{% url 'books:book_student' book.id %}" role="button">View</a>
+                    
+                </div>
+            </div>
+            {% endfor %}
+       </div>
+    <br/><!--
+       {{ books_list }}
+       <br/>
+       Has Previous: {{ books_list.has_previous }}
+       <br/>
+       Has Next: {{ books_list.has_next }}
+       <br/>
+       Current Page: {{ books_list.number }}
+       <br/>
+       Number of pages: {{ books_list.paginator.num_pages }}
+       <br/><br/><br/>-->
+       <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if books_list.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ books_list.previous_page_number }}">Previous</a></li>
+
+                {% endif %}    
+       
+                <!--<li class="page-item disabled"><a class="page-link " href="#">Page {{ books_list.number }} of {{ books_list.paginator.num_pages }}</a></li>-->
+                {% for p in pages %}
+                <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                {% endfor %}
+
+                {% if books_list.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ books_list.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ books_list.paginator.num_pages }}">&raquo Last</a></li>
+
+                {% endif %}
+            </ul>
+        </nav> 
+    </div>
+
+</div>
+{% else %}
+<h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+</br>
+<h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+{% endif %}
+{% endblock content %}

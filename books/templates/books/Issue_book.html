@@ -1,0 +1,31 @@
+{% extends 'main_librarian.html'%}
+
+{% block content%}
+{% if user.is_authenticated %}
+
+<div>
+    <center>
+        <h1>Add book </h1>
+    <br/><br/>
+    {%if submitted %}
+        <div class="alert alert-primary" role="alert">
+            Book was added succesfully!!! 
+        </div>  
+    {% else %}
+        <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %} 
+        {{ form.as_p}} 
+        <button type="submit " class="btn btn-primary">Add</button>
+        </form>
+    {% endif %}
+
+    </center>
+
+
+</div>
+{% else %}
+<h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+</br>
+<h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+{% endif %}
+{%  endblock content  %}

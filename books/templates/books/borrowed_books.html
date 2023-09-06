@@ -1,0 +1,29 @@
+{% extends 'main_librarian.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1 style='color:blue;'>Borrowed books</h1>
+    <div>
+        {% if Books %}
+            {% for book in Books %}
+                <div>
+                    {{ book.Book.book_cover.url }}
+                    {{ book.Book.title }}
+                    {{ book.Book.id }}
+                    {{ book.date_borrowed }}
+                    {{ book.return_date }}
+                </div>
+            {% endfor %}
+        {% else %} 
+        <h5>No books borrowed yet</h5>
+        {% endif %}            
+    
+    </div>
+    {% else %}
+    <h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+    </br>
+    <h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+    {% endif %}
+</div>
+{% endblock content %}

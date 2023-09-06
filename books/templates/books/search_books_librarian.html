@@ -1,0 +1,43 @@
+{% extends 'main_librarian.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container-fluid">
+    <div>
+        <centre>
+            {% if searched %}
+                <h1>
+                    <div class="alert alert-primary" role="alert">
+                        You searched for {{ searched }}
+                    </div>
+                
+                </h1>
+                <br/>
+                {% for book in books%}
+                    <a href="{%url 'books:book_librarian' book.id %}">{{book}}</a>
+                    <a class="btn btn-primary" href="{% url 'books:update_book' book.id %}" role="button">Update</a>
+                    <a class="btn btn-danger" href="{% url 'books:delete_book' book.id %}" role="button">Delete</a>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <h1>
+                    <div class="alert alert-danger" role="alert">
+                        Hey you forgot to search for a book..
+                    </div>
+                    
+                </h1>
+            {% endif %}
+        </centre>
+                    
+        
+    </div>
+
+
+{% else %}
+<h1>Please Login First</h1> <a href="/users/login_user/" style='color:black;'>Login</a>
+</br>
+<h1>Please Signup here</h1><a href="/users/register_user/" style='color:black;'>signup</a>
+{% endif %}
+</div>
+{% endblock content %}
